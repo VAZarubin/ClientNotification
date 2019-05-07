@@ -14,11 +14,12 @@ namespace TemperatureServer
             var container = new Container();
 
             container.RegisterInstance<ITempHolder>(new TempHolder(25));
+            
+            container.RegisterSingleton<ISubscriptionHub, SubscriptionHub>();
 
             var config = new HttpConfiguration();
 
             config.MapHttpAttributeRoutes();
-            
             
 
             config.Routes.MapHttpRoute("Home", "{controller}/{action}");
