@@ -5,24 +5,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript">
-        
-        function Req()
+        function RequestData()
         {
             fetch('http://localhost:9650/temp/current')
                 .then(function(response) {
-                                                                          return response.text();
+                                         return response.text();
                 })
                 .then(function(val) {
                     document.getElementById("tempHolder").innerText = val;
                 })
         }
         
-        
-        setInterval(Req, 4*1000);
-        
-        
-        
-        
+        setInterval(RequestData, 4*1000);
     </script>
     
 </head>
@@ -43,7 +37,7 @@
 <script>
     upButton.onclick = function () {
         fetch("http://localhost:9650/temp/up", {method : "POST"});
-    }
+    };
 
     downButton.onclick = function () {
         fetch("http://localhost:9650/temp/down", {method : "POST"});
