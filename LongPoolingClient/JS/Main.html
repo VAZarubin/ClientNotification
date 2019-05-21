@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript">
+        function RequestData()
+        {
+            fetch('http://localhost:9700/temp/gettemp')
+                .then(function(response) {
+                                         return response.text();
+                })
+                .then(function(val) {
+                    document.getElementById("tempHolder").innerText = val;
+                    return true;
+                })
+                .then(function (value) { 
+                    RequestData();
+                });
+        }
+        
+        RequestData();
+    </script>
+    
+</head>
+<body>
+
+<div class="container">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Текущая температура</h5>
+            <p class="card-text" id="tempHolder"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <button type="button" id="upButton" class="btn btn-danger">Повысить</button>
+            <button type="button" id="downButton" class="btn btn-info">Понизить</button>
+        </ul>
+    </div>
+</div>
+<script>
+    upButton.onclick = function () {
+        fetch("http://localhost:9700/temp/up", {method : "GET"});
+    };
+
+    downButton.onclick = function () {
+        fetch("http://localhost:9700/temp/down", {method : "GET"});
+    }
+    
+</script>
+
+
+</body>
+</html>

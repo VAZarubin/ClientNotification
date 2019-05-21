@@ -7,20 +7,13 @@ namespace TemperatureServer
     {
         #region Static and Readonly Fields
 
-        private readonly ISubscriptionHub subscriptionHub;
-
-        private readonly ITempHolder tempHolder;
 
         #endregion
 
         #region Constructors
 
-        public TempController(ITempHolder tempHolder, ISubscriptionHub subscriptionHub)
-        {
-            this.tempHolder = tempHolder;
-            this.subscriptionHub = subscriptionHub;
-        }
-
+        private static volatile int currentTemp = 25;
+        
         #endregion
 
         #region Methods
@@ -28,29 +21,19 @@ namespace TemperatureServer
         [HttpGet]
         public int Current()
         {
-            return tempHolder.Temp;
+            return currentTemp;
         }
 
         [HttpPost]
         public void Down()
         {
-            tempHolder.Down();
-
-            foreach (Subscription subscriptionHubSubscription in subscriptionHub.Subscriptions)
-            {
-                subscriptionHubSubscription.IpAddress.PostStringAsync(tempHolder.Temp.ToString());
-            }
+            currentTemp--;
         }
 
         [HttpPost]
         public void Up()
         {
-            tempHolder.Up();
-
-            foreach (Subscription subscriptionHubSubscription in subscriptionHub.Subscriptions)
-            {
-                subscriptionHubSubscription.IpAddress.PostStringAsync(tempHolder.Temp.ToString());
-            }
+            currentTemp++;
         }
 
         #endregion
