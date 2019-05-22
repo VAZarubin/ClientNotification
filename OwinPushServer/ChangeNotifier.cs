@@ -15,7 +15,7 @@ namespace OwinPushServer
         public void NotifyClients(int temp)
         {
             foreach (var sub in subscriberHolder.GetSubscribers)
-                $"{sub}/temp/current".PostStringAsync(temp.ToString());
+                $"{sub}/temp/current".PostJsonAsync(new TempChange(temp));
         }
     }
 }
