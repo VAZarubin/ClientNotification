@@ -26,7 +26,7 @@ namespace MessageConsumer
                     {
                         var body = ea.Body;
                         var message = Encoding.UTF8.GetString(body);
-                        Console.WriteLine(" [x] Received {0}", message);
+                        Console.WriteLine("Current Temp is {0}", message);
                     };
                     
                     channel.BasicConsume("tempQueue",

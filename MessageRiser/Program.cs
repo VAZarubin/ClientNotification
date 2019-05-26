@@ -17,7 +17,7 @@ namespace MessageRiser
                 Console.Write("Command: ");
                 var action = Console.ReadLine();
 
-                if (action != "up" || action != "down")
+                if (action != "up" && action != "down")
                 {
                     Console.WriteLine("Not Valid Command");
                     continue;

@@ -2,6 +2,7 @@
 using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SimpleInjector;
 
 namespace MessageProducer
 {
@@ -9,39 +10,39 @@ namespace MessageProducer
     {
         public static void Main(string[] args)
         {
-            var factory = new ConnectionFactory {HostName = "localhost", UserName = "producer", Password = "123"};
-            using (IConnection connection = factory.CreateConnection())
+
+
+            var container = new Container();
+
+            container.RegisterSingleton<ITempHolder, TempHolder>();
+
+            container.RegisterSingleton<IMessageSender, MessageSender>();
+
+            container.RegisterInstance<IConnectionFactory>(new ConnectionFactory()
             {
-                using (var channel = connection.CreateModel())
-                {
-                    channel.QueueDeclare("tempQueue",
-                        false,
-                        false,
-                        false,
-                        null);
-
-                    var consumer = new EventingBasicConsumer(channel);
-                    
-                    consumer.Received += (model, ea) =>
-                    {
-                        var body = ea.Body;
-                        var message = Encoding.UTF8.GetString(body);
-                        Console.WriteLine(" [x] Received {0}", message);
-                    };
-                    
-                    channel.BasicConsume("tempQueue",
-                        true,
-                        consumer);
-
-                    Console.WriteLine(" Press [enter] to exit.");
-                    Console.ReadLine();
-                }
-            }
-            
-
+                HostName = "localhost", UserName = "producer", Password = "123"
+            });
 
             
+            container.RegisterSingleton<ITempChangerNotifier, TempChangeNotifier>();
+
+            container.RegisterSingleton<Listener>();
+
             
+            container.Verify();
+
+            var listener = container.GetInstance<Listener>();
+            
+            listener.ActivateListening();
+            
+            Console.WriteLine("Press any key to exit");
+
+            Console.ReadKey();
+
+
+
+
+
         }
     }
 }
