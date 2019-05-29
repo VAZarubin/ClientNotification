@@ -4,7 +4,7 @@ namespace SignalRServer
 {
     public class TempHub : Hub<IClient>
     {
-        public static int temp = 25;
+        private static int temp = 25;
 
         public void Up()
         {

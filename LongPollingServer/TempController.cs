@@ -10,7 +10,7 @@ namespace LongPollingServer
         [HttpGet]
         public async Task<int> GetTemp()
         {
-            var temp =  await tempHolder.TempChange;
+            int temp =  await tempHolder.TempChange;
 
             return temp;
         }

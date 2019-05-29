@@ -6,28 +6,27 @@ namespace MessageProducer
 {
     public class MessageSender : IMessageSender
     {
+        #region IMessageSender Members
+
         public void SendMessage(string message)
         {
-            var factory = new ConnectionFactory {HostName = "localhost", UserName = "producer", Password = "123"};
+            var factory = new ConnectionFactory { HostName = "localhost", UserName = "producer", Password = "123" };
 
-            using (var connection = factory.CreateConnection())
-            using (var channel = connection.CreateModel())
+            using (IConnection connection = factory.CreateConnection())
             {
-                channel.QueueDeclare("tempQueue",
-                    false,
-                    false,
-                    false,
-                    null);
+                using (IModel channel = connection.CreateModel())
+                {
+                    channel.QueueDeclare("tempQueue", false, false, false, null);
 
-                var body = Encoding.UTF8.GetBytes(message);
+                    byte[] body = Encoding.UTF8.GetBytes(message);
 
-                channel.BasicPublish("",
-                    "tempQueue",
-                    null,
-                    body);
+                    channel.BasicPublish("", "tempQueue", null, body);
 
-                Console.WriteLine(" [x] Sent {0}", message);
+                    Console.WriteLine(" [x] Sent {0}", message);
+                }
             }
         }
+
+        #endregion
     }
 }

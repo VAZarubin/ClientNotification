@@ -59,7 +59,6 @@ namespace OwinPushClient
 
             appBuilder.UseCors(CorsOptions.AllowAll);
 
-
             appBuilder.UseWebApi(config);
 
             config.EnsureInitialized();

@@ -14,15 +14,12 @@ namespace SignalRServer
 
             config.MapHttpAttributeRoutes();
 
-
             config.Routes.MapHttpRoute("Home", "{controller}/{action}");
-
 
             appBuilder.UseCors(CorsOptions.AllowAll);
             appBuilder.MapSignalR();
 
             appBuilder.UseWebApi(config);
-
 
             config.EnsureInitialized();
         }

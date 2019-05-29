@@ -5,6 +5,8 @@ namespace OwinPushClient
 {
     public class TempController : ApiController
     {
+        #region Methods
+
         [HttpPost]
         public IHttpActionResult Current(TempChange currentTemp)
         {
@@ -12,5 +14,7 @@ namespace OwinPushClient
 
             return Ok();
         }
+
+        #endregion
     }
 }

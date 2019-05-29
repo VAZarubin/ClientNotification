@@ -28,7 +28,7 @@ namespace LongPoolingClient
             {
                 if (toker.IsCancellationRequested) break;
 
-                var currentTemp = await "http://localhost:9700/temp/GetTemp".GetStringAsync();
+                string currentTemp = await "http://localhost:9700/temp/GetTemp".GetStringAsync();
 
                 Console.WriteLine(currentTemp);
             }

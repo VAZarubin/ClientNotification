@@ -10,7 +10,7 @@ namespace MessageConsumer
         public static void Main(string[] args)
         {
             var factory = new ConnectionFactory {HostName = "localhost", UserName = "host1", Password = "123"};
-            using (var connection = factory.CreateConnection())
+            using (IConnection connection = factory.CreateConnection())
             {
                 using (var channel = connection.CreateModel())
                 {
